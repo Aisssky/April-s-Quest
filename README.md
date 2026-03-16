@@ -29,7 +29,7 @@ UE 5.6 · Visual Studio 2022 · Windows
 动画系统：
 
   - 基于 AnimBlueprint 搭建角色状态机，管理 Idle / Run / Jump / Attack / Death / Vault /Run /Crouch 完整状态转换；
-  - 使用 BlendSpace处理方向移动与速度的动画混合；AnimMontage 实现攻击
-  - 连击系统，AnimNotify 在关键帧触发伤害判定与音效播放。 
+  - 使用 BlendSpace处理方向移动与速度的动画混合；
+  - AnimMontage 实现攻击连击系统，AnimNotify 在关键帧触发伤害判定与音效播放。 
 
 ---
