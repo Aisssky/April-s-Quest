@@ -33,3 +33,10 @@ UE 5.6 · Visual Studio 2022 · Windows
   - AnimMontage 实现攻击连击系统，AnimNotify 在关键帧触发伤害判定与音效播放。 
 
 ---
+- 搭建 AAQCharacterBase 作为所有角色的 C++ 基类
+- 接入 GAS 框架：ASC + AttributeSet + 初始属性 GE
+- 实现 AQGameplayAbility 技能基类和 GA_Attack 攻击技能
+- 实现 AQCombatComponent 球形检测 + GE 伤害施加
+- 蓝图 ANS_MeleeAttack 驱动攻击窗口开关
+- 打通攻击：按键→GAS激活→Montage→AnimNotify→伤害判定
+- 规范项目目录结构，删去不必要的文件
