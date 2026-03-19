@@ -40,3 +40,22 @@ UE 5.6 · Visual Studio 2022 · Windows
 - 蓝图 ANS_MeleeAttack 驱动攻击窗口开关
 - 打通攻击：按键→GAS激活→Montage→AnimNotify→伤害判定
 - 规范项目目录结构，删去不必要的文件
+---
+
+- 向UAQAttributeSet添加FOnAttributeChanged委托
+- 在PostGameplayEffectExecute中广播Health/Stamina的变化
+- 实现带有ProgressBar/TextBlock BindWidget的UAQHUDPanel
+- 在AQPlayerCharacter::BeginPlay中连接UIManager的OpenPanel调用
+
+- 数据流：
+  玩家攻击 → HandleAttack()
+    → TryActivateAbilityByTag
+    → UAQAbility_Attack::ActivateAbility → PlayAnimMontage
+    → ANS 通知 → CombatComponent::EnableAttack() 这段还没做
+    → TickComponent → PerformAttackTrace → 命中目标
+    → ApplyGameplayEffectSpecToTarget (DamageEffect)
+    → UAQAttributeSet::PostGameplayEffectExecute
+        → SetHealth(NewHealth)
+        → OnHealthChanged.Broadcast(NewHealth, MaxHealth)
+    → UAQHUDPanel::OnHealthChanged(NewValue, MaxValue)
+        → PB_Health->SetPercent(Percent) 
