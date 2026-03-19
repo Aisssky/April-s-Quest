@@ -12,11 +12,9 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+//委托声明
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAttributeChanged, float, NewValue, float, MaxValue);
 
-
-/**
- * 
- */
 UCLASS()
 class APIRLQUEST_API UAQAttributeSet : public UAttributeSet
 {
@@ -59,6 +57,11 @@ public:
 	FGameplayAttributeData IncomingDamage;
 	ATTRIBUTE_ACCESSORS(UAQAttributeSet, IncomingDamage)
 
+	//委托 对外广播
+	UPROPERTY(BlueprintAssignable, Category = "Attributes|Delegates")//蓝图委托
+	FOnAttributeChanged OnHealthChanged;
 
+	UPROPERTY(BlueprintAssignable, Category = "Attributes|Delegates")
+	FOnAttributeChanged OnStaminaChanged;
 
 };

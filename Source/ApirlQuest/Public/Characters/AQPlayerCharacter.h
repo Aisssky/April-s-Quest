@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Characters/AQCharacterBase.h"
 #include "InputActionValue.h"
+#include "UI/AQBasePanel.h"
 #include "AQPlayerCharacter.generated.h"
 
 
@@ -27,6 +28,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	//UI
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UAQBasePanel> HUDPanelClass;
 
 	//相机
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")

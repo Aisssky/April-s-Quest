@@ -5,7 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputComponent.h"
 #include  "EnhancedInputSubsystems.h"	
-
+#include "UI/AQUIManager.h"
 
 
 AAQPlayerCharacter::AAQPlayerCharacter()
@@ -36,6 +36,18 @@ void AAQPlayerCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	// HUD 
+	if (HUDPanelClass)
+	{
+		if (UGameInstance* GI = GetGameInstance())
+		{
+			if (UAQUIManager* UIManager = GI->GetSubsystem<UAQUIManager>())
+			{
+				UIManager->OpenPanel(HUDPanelClass, 0);
+			}
+		}
+	}
+
 }
 
 
