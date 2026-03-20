@@ -28,23 +28,27 @@ void UAQHUDPanel::BindToPlayerCharacter()
 {
 	AAQCharacterBase* Character = Cast<AAQCharacterBase>(UGameplayStatics::GetPlayerPawn(this, 0));
 
-	if(!ensureMsgf(Character, TEXT("AQHUD:PlayerCharacter没找到!")))
-	{
-		return;
-	}
+	//测试
+	UE_LOG(LogTemp, Warning, TEXT("HUD: Character = %s"),
+		Character ? *Character->GetName() : TEXT("NULL"));
+	if (!Character) return;
 
 	//AttributeSet挂在角色上 获取GetAttributeSet
 	UAQAttributeSet* AS = Character->GetAttributeSet();
-	if(!ensureMsgf(AS, TEXT("AQHUD:AttributeSet没找到!")))
-	{
-		return;
-	}
+
+	//测试
+	UE_LOG(LogTemp, Warning, TEXT("HUD: AS = %s, Health = %.1f, MaxHealth = %.1f"),
+		AS ? TEXT("Valid") : TEXT("NULL"),
+		AS ? AS->GetHealth() : -1.f,
+		AS ? AS->GetMaxHealth() : -1.f);
+	if (!AS) return;
 
 	CachedAttributeSet = AS;//弱指针解绑用
 
 	//绑定委托
 	AS->OnHealthChanged.AddDynamic(this, &UAQHUDPanel::OnHealthChanged);
 	AS->OnStaminaChanged.AddDynamic(this, &UAQHUDPanel::OnStaminaChanged);
+	
 
 	//绑定后立刻刷新UI，解决先有血量还是先有HUD的问题
 	//防止 HUD 晚于 Character 创建导致初始值为 0

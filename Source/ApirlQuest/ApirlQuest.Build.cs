@@ -27,6 +27,9 @@ public class ApirlQuest : ModuleRules
             "Slate",        
             "SlateCore",    
 
+			//AI
+			"AIModule",
+			"NavigationSystem",
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

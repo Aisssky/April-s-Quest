@@ -1,6 +1,7 @@
 
 #include "AbilitySystem/AQAttributeSet.h"
 #include "GameplayEffectExtension.h"
+#include "Characters/AQCharacterBase.h"
 
 UAQAttributeSet::UAQAttributeSet()
 {
@@ -31,19 +32,28 @@ void UAQAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 	{
 		float Damage = GetIncomingDamage();
+
 		//消费后 清空IncomingDamage
 		SetIncomingDamage(0.f);
 
 		if (Damage > 0.f)
 		{
-			const float NewHealth = FMath::Max(GetHealth() - Damage,0.f);
+			const float NewHealth = FMath::Clamp(GetHealth() - Damage,0.f,GetMaxHealth());
 			SetHealth(NewHealth);
 
 			//广播死亡事件给CharacterBase
 			OnHealthChanged.Broadcast(NewHealth, GetMaxHealth());
 
 
-			//TODO: 死亡事件的委托，如果Health变为0了就触发死亡逻辑	
+			//死亡事件的委托，如果Health变为0了就触发死亡逻辑	
+			//判断
+			if(NewHealth <=0.f)
+			{
+				if(AAQCharacterBase* Character = Cast<AAQCharacterBase>(GetOwningActor()))
+				{
+					Character->Die();
+				}
+			}
 		}	
 		return;
 	}
@@ -73,4 +83,6 @@ void UAQAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 	{
 		OnStaminaChanged.Broadcast(GetStamina(), GetMaxStamina());
 	}
+
+
 }

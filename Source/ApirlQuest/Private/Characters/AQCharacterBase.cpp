@@ -28,6 +28,12 @@ UAbilitySystemComponent* AAQCharacterBase::GetAbilitySystemComponent() const
 void AAQCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	/*测试死亡·
+	FTimerHandle TempHandle;
+	GetWorldTimerManager().SetTimer(TempHandle, this, &AAQCharacterBase::Die, 3.f, false);
+	*/
+	
 }
 
 void AAQCharacterBase::PossessedBy(AController* NewController)
@@ -98,21 +104,24 @@ float AAQCharacterBase::GetMaxHealth() const
 
 void AAQCharacterBase::Die()
 {
+	//测试
+	UE_LOG(LogTemp, Warning, TEXT("Die() called, IsAlive = %s, Health = %.1f"),
+		IsAlive() ? TEXT("true") : TEXT("false"),
+		GetHealth());
+
 	if (!IsAlive())return;
 	
 	//取消所有技能的进行
 	AbilitySystemComponent->CancelAllAbilities();
 
-	//播放死亡动画
-	if (DeathMontage)
-	{
-		PlayAnimMontage(DeathMontage);
-	}
-
-	//关闭碰撞然后去死
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	//停止移动
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
 
-	//TODO:死亡后的一些逻辑，比如掉落物品，销毁角色等
+	//禁用碰撞
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	//Ragdoll  死亡动画这一块看精力吧 这里用的最简单的方法去死
+	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+	GetMesh()->SetSimulatePhysics(true);//把角色mesh交给物理引擎
 }
