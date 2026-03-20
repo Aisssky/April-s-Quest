@@ -58,4 +58,15 @@ UE 5.6 · Visual Studio 2022 · Windows
         → SetHealth(NewHealth)
         → OnHealthChanged.Broadcast(NewHealth, MaxHealth)
     → UAQHUDPanel::OnHealthChanged(NewValue, MaxValue)
-        → PB_Health->SetPercent(Percent) 
+        → PB_Health->SetPercent(Percent)
+
+  ---
+  
+- 修复 GE_DefaultAttributes 中的修饰器顺序（先最大值后当前值）【否则Health 初始值被 Clamp 成 0
+- 添加继承自 AAQCharacterBase 的 AAQEnemyCharacter，并启用 AutoPossessAI
+- 添加 AAQAIController，并在 OnPossess 中启动行为树
+- 在 Build.cs 中添加 AIModule 和 NavigationSystem 模块依赖
+- 骨骼资产污染问题
+  
+   不同来源的骨骼网格体不能共用同一个骨骼资产。导入外部角色时必须给它创建独立的骨骼，否则会污染已有骨骼。还好接了版本控制【喜，下次导入新骨骼网格体时，Skeleton 一栏必须选 None，让 UE 创建独立骨骼，或者选择新建项目然后做 做好了再迁移资产
+---
