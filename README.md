@@ -70,3 +70,11 @@ UE 5.6 · Visual Studio 2022 · Windows
   
    不同来源的骨骼网格体不能共用同一个骨骼资产。导入外部角色时必须给它创建独立的骨骼，否则会污染已有骨骼。还好接了版本控制【喜，下次导入新骨骼网格体时，Skeleton 一栏必须选 None，让 UE 创建独立骨骼，或者选择新建项目然后做 做好了再迁移资产
 ---
+
+- 新增继承自AAQCharacterBase的AAQEnemyCharacterBase
+- 新增带有AIPerceptionComponent（视觉配置）的AAQAIController
+- 实现OnTargetPerceptionUpdated用于更新黑板
+- BT_Enemy：包含追逐序列和空闲等待的选择器
+- 在丢失视野后保留TargetActor以实现持续追击"
+
+---
