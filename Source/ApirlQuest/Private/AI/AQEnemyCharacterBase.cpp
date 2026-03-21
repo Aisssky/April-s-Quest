@@ -1,11 +1,13 @@
 ﻿#include "AI/AQEnemyCharacterBase.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/Pawn.h"
 #include "BehaviorTree/BehaviorTree.h"
 
 
-AAQEnemyCharacterBase::AQEnemyCharacterBase()
+AAQEnemyCharacterBase::AAQEnemyCharacterBase()
 {
 	//AIcontroller获取
-	EAutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 
