@@ -14,4 +14,6 @@ class APIRLQUEST_API UAQAbilitySystemComponent :public UAbilitySystemComponent
 public:
 	//通过TAG激活技能
 	bool TryActivateAbilityByTag(const FGameplayTag& AbilityTag);
+	// 通过 Tag 找到已授予的技能实例
+	UGameplayAbility* FindAbilityInstanceByTag(const FGameplayTag& AbilityTag) const;
 };

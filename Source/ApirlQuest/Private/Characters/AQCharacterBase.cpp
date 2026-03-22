@@ -87,10 +87,6 @@ void AAQCharacterBase::GrantDefaultAbilities()
 }
 
 //战斗接口
-bool AAQCharacterBase::IsAlive() const
-{
-	return AttributeSet && AttributeSet->GetHealth() > 0;
-}
 
 float AAQCharacterBase::GetHealth() const
 {
@@ -104,13 +100,11 @@ float AAQCharacterBase::GetMaxHealth() const
 
 void AAQCharacterBase::Die()
 {
-	//测试
-	UE_LOG(LogTemp, Warning, TEXT("Die() called, IsAlive = %s, Health = %.1f"),
-		IsAlive() ? TEXT("true") : TEXT("false"),
-		GetHealth());
 
-	if (!IsAlive())return;
-	
+	//先前用的是isAlive检查 发现逻辑没打通 换成bool
+	if (bDead)return;
+	bDead = true;
+
 	//取消所有技能的进行
 	AbilitySystemComponent->CancelAllAbilities();
 
@@ -124,4 +118,9 @@ void AAQCharacterBase::Die()
 	//Ragdoll  死亡动画这一块看精力吧 这里用的最简单的方法去死
 	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
 	GetMesh()->SetSimulatePhysics(true);//把角色mesh交给物理引擎
+}
+
+bool AAQCharacterBase::IsAlive() const
+{
+	return !bDead && AttributeSet && AttributeSet->GetHealth() > 0;
 }

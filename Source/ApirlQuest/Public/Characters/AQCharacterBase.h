@@ -80,5 +80,6 @@ protected:
 
 private:
 	bool bAbilitySystemInitialized = false;
+	bool bDead = false;
 
 };

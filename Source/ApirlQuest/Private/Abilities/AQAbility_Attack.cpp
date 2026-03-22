@@ -38,6 +38,9 @@ void UAQAbility_Attack::ActivateAbility(
 
 void UAQAbility_Attack::OnMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
+	//因为先前只有一个montage所以跑的通 加一行montage过滤 
+	if (Montage != AttackMontage)return;//只响应自己的Montage
+
 	if(bInterrupted)
 	{
 		//如果被打断了，直接结束技能
