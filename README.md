@@ -78,3 +78,9 @@ UE 5.6 · Visual Studio 2022 · Windows
 - 在丢失视野后保留TargetActor以实现持续追击"
 
 ---
+- 新增 UAQBTTask_UseAbility：通过 Tag 激活技能，绑定 OnGameplayAbilityEnded 回调阻塞 BT 直到技能结束
+- UAQAbilitySystemComponent 新增 FindAbilityInstanceByTag()
+- 修复 UAQAbility_Attack::OnMontageEnded 未过滤蒙太奇实例的 bug
+- 修复 AAQCharacterBase::IsAlive 重复定义
+
+---
